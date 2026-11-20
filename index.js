@@ -210,6 +210,15 @@ function loadPlugins() {
   return cachedPlugins;
 }
 
+// Browser identity: pair code linking Ubuntu/Chrome-il aanu standard (Baileys docs).
+// WA_BROWSER=android -> android (view once), chrome -> Ubuntu Chrome, safari -> Safari, illenkil Ubuntu Chrome.
+function pickBrowser(kind, Browsers, config) {
+  if (kind === "android") return ["Android", "ANDROID_PHONE", "14.0.0"];
+  if (kind === "safari") return typeof Browsers?.macOS === "function" ? Browsers.macOS("Safari") : ["Mac OS", "Safari", config.version];
+  if (typeof Browsers?.ubuntu === "function") return Browsers.ubuntu("Chrome");
+  return ["Ubuntu", "Chrome", "20.0.04"];
+}
+
 async function startBot() {
   if (starting) return;
   starting = true;
@@ -252,7 +261,7 @@ async function startBot() {
       auth: state,
       logger: pino({ level: "silent" }),
       printQRInTerminal: false,
-      browser: String(process.env.WA_BROWSER || "").toLowerCase() === "android" ? ["Android", "ANDROID_PHONE", "14.0.0"] : (typeof Browsers?.macOS === "function" ? Browsers.macOS("Safari") : ["Mac OS", "Safari", config.version]),
+      browser: pickBrowser(String(process.env.WA_BROWSER || "").toLowerCase(), Browsers, config),
       markOnlineOnConnect: false,
       syncFullHistory: false,
     });
