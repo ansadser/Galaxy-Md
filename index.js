@@ -210,8 +210,8 @@ function loadPlugins() {
   return cachedPlugins;
 }
 
-// Browser identity: pair code linking Ubuntu/Chrome-il aanu standard (Baileys docs).
-// WA_BROWSER=android -> android (view once), chrome -> Ubuntu Chrome, safari -> Safari, illenkil Ubuntu Chrome.
+// Browser identity. Pair code linking-inu Ubuntu/Chrome standard.
+// WA_BROWSER=android -> android (view once), safari -> Safari, illenkil Ubuntu Chrome.
 function pickBrowser(kind, Browsers, config) {
   if (kind === "android") return ["Android", "ANDROID_PHONE", "14.0.0"];
   if (kind === "safari") return typeof Browsers?.macOS === "function" ? Browsers.macOS("Safari") : ["Mac OS", "Safari", config.version];
